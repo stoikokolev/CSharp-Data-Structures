@@ -11,7 +11,7 @@
         private T[] _items;
 
         public ReversedList()
-            : this(DefaultCapacity) { this._items = new T[DefaultCapacity]; }
+            : this(DefaultCapacity) { }
 
         public ReversedList(int capacity)
         {
@@ -64,8 +64,8 @@
 
         public void Insert(int index, T item)
         {
-            this.ValidateLength();
             this.ValidateIndex(index);
+            this.ValidateLength();
             for (int i = this.Count; i > index; i--)
             {
                 this._items[i] = this._items[i - 1];
@@ -78,14 +78,14 @@
         public bool Remove(T item)
         {
             int indexToRemove = this.IndexOf(item);
-            if (indexToRemove == -1)
-            {
-                return false;
-            }
-            else
+            if (indexToRemove != -1)
             {
                 this.RemoveAt(indexToRemove);
                 return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -94,7 +94,7 @@
 
             this.ValidateIndex(index);
             int indexToRemove = this.Count - index - 1;
-            for (int i = indexToRemove; i < this.Count; i++)
+            for (int i = indexToRemove; i < this.Count-1; i++)
             {
                 this._items[i] = this._items[i + 1];
             }
@@ -112,9 +112,7 @@
         }
 
         IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
+            => this.GetEnumerator();
 
         private void ValidateLength()
         {
@@ -126,7 +124,7 @@
 
         private void Grow()
         {
-            var newArr = new T[this.Count * 2];
+            var newArr = new T[this._items.Length * 2];
             Array.Copy(this._items, newArr, this.Count);
             this._items = newArr;
         }
@@ -135,7 +133,7 @@
         {
             if (index < 0 || index >= this.Count)
             {
-                throw new IndexOutOfRangeException();
+                throw new IndexOutOfRangeException("Invalid index!");
             }
         }
 

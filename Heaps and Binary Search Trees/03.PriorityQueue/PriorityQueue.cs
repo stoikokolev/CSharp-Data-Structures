@@ -8,14 +8,14 @@ namespace _03.PriorityQueue
     public class PriorityQueue<T> : IAbstractHeap<T>
         where T : IComparable<T>
     {
+        private List<T> _elements;
+
         public PriorityQueue()
         {
             this._elements=new List<T>();
         }
 
         public int Size => this._elements.Count;
-
-        private List<T> _elements;
 
         public T Dequeue()
         {

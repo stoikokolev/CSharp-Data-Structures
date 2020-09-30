@@ -1,25 +1,48 @@
-﻿namespace _03.PriorityQueue
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace _03.PriorityQueue
 {
     using System;
 
     public class PriorityQueue<T> : IAbstractHeap<T>
         where T : IComparable<T>
     {
-        public int Size { get { throw new NotImplementedException(); } }
+        public PriorityQueue()
+        {
+            this._elements=new List<T>();
+        }
+
+        public int Size => this._elements.Count;
+
+        private List<T> _elements;
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            this.CheckIfEmpty();
+            var element = this._elements[this.Size - 1];
+            this._elements.RemoveAt(this.Size - 1);
+            return element;
         }
 
         public void Add(T element)
         {
-            throw new NotImplementedException();
+            this._elements.Add(element);
+            this._elements.Sort();
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            this.CheckIfEmpty();
+            return this._elements.Last();
+        }
+
+        private void CheckIfEmpty()
+        {
+            if (this._elements.Count<=0)
+            {
+                throw new InvalidOperationException();
+            }
         }
     }
 }

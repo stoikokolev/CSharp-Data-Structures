@@ -13,21 +13,34 @@
             this._elements = new List<T>();
         }
 
-        public int Size => throw new NotImplementedException();
+        public int Size => this._elements.Count;
 
         public T Dequeue()
         {
-            throw new NotImplementedException();
+            this.EnsureNotEmpty();
+            var toReturn = this._elements[0];
+            this._elements.RemoveAt(0);
+            return toReturn;
         }
 
         public void Add(T element)
         {
-            throw new NotImplementedException();
+            this._elements.Add(element);
+            this._elements.Sort();
         }
 
         public T Peek()
         {
-            throw new NotImplementedException();
+            this.EnsureNotEmpty();
+            return this._elements[0];
+        }
+
+        private void EnsureNotEmpty()
+        {
+            if (this._elements.Count == 0)
+            {
+                throw new InvalidOperationException();
+            }
         }
     }
 }

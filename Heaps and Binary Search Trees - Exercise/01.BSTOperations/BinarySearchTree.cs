@@ -11,7 +11,7 @@
             this.Root = null;
             this.LeftChild = null;
             this.RightChild = null;
-            
+
         }
 
         public BinarySearchTree(Node<T> root)
@@ -70,7 +70,7 @@
             if (this.Root == null)
             {
                 this.Root = new Node<T>(element, null, null);
-                
+
 
             }
             else
@@ -82,24 +82,24 @@
                     {
                         if (current.LeftChild != null)
                         {
+                            current.Count++;
                             current = current.LeftChild;
                         }
                         else
                         {
                             current.LeftChild = new Node<T>(element, null, null);
-                            current.Count++;
                         }
                     }
                     else if (element.CompareTo(current.Value) > 0)
                     {
                         if (current.RightChild != null)
                         {
+                            current.Count++;
                             current = current.RightChild;
                         }
                         else
                         {
                             current.RightChild = new Node<T>(element, null, null);
-                            current.Count++;
                         }
                     }
                     else if (element.CompareTo(current.Value) == 0)
@@ -148,14 +148,51 @@
 
         public void EachInOrder(Action<T> action)
         {
-            throw new NotImplementedException();
+            Node<T> current = this.Root;
+            this.EachInOrderDfs(current, action);
+        }
+
+        private void EachInOrderDfs(Node<T> current, Action<T> action)
+        {
+            if (current.LeftChild != null)
+            {
+                this.EachInOrderDfs(current.LeftChild, action);
+            }
+            action.Invoke(current.Value);
+            if (current.RightChild != null)
+            {
+                this.EachInOrderDfs(current.RightChild, action);
+            }
         }
 
         public List<T> Range(T lower, T upper)
         {
-            throw new NotImplementedException();
-        }
+            var result = new List<T>();
+            var queue = new Queue<Node<T>>();
+            queue.Enqueue(this.Root);
 
+            while (queue.Count > 0)
+            {
+                var current = queue.Dequeue();
+                if (!this.IsLess(current.Value, lower) && !this.IsGreater(current.Value, upper))
+                {
+                    result.Add(current.Value);
+                }
+
+                if (current.LeftChild != null)
+                {
+                    queue.Enqueue(current.LeftChild);
+                }
+
+                if (current.RightChild != null)
+                {
+                    queue.Enqueue(current.RightChild);
+                }
+            }
+
+            return result;
+        }
+        
         public void DeleteMin()
         {
             this.CheckIfEmpty();
@@ -170,6 +207,7 @@
 
             while (current.LeftChild != null)
             {
+                current.Count--;
                 previous = current;
                 current = current.LeftChild;
             }
@@ -187,10 +225,8 @@
                 current = null;
             }
 
-           
-        }
 
-        
+        }
 
         public void DeleteMax()
         {
@@ -206,6 +242,7 @@
 
             while (current.RightChild != null)
             {
+                current.Count--;
                 previous = current;
                 current = current.RightChild;
             }
@@ -226,7 +263,31 @@
 
         public int GetRank(T element)
         {
-            throw new NotImplementedException();
+            return this.GetRankDfs(this.Root, element);
+        }
+
+        private int GetRankDfs(Node<T> current, T element)
+        {
+            if (current == null)
+            {
+                return 0;
+            }
+
+            if (this.IsLess(element, current.Value))
+            {
+                return this.GetRankDfs(current.LeftChild, element);
+            }
+            else if (this.AreEqual(element, current.Value))
+            {
+                return this.GetNodeCount(current);
+            }
+
+            return this.GetNodeCount(current.LeftChild) + 1 + this.GetRankDfs(current.RightChild, element);
+        }
+
+        private int GetNodeCount(Node<T> curent)
+        {
+            return curent == null ? 0 : curent.Count;
         }
 
         private void CheckIfEmpty()
@@ -236,5 +297,22 @@
                 throw new InvalidOperationException();
             }
         }
+
+        private bool IsLess(T first, T second)
+        {
+            return first.CompareTo(second) < 0;
+        }
+
+        private bool AreEqual(T first, T second)
+        {
+            return first.CompareTo(second) == 0;
+        }
+
+        private bool IsGreater(T first, T second)
+        {
+            return first.CompareTo(second) > 0;
+        }
+
+
     }
 }

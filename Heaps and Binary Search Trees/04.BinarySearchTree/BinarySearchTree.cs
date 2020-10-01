@@ -92,6 +92,7 @@
                         else
                         {
                             current.RightChild = new Node<T>(element, null, null);
+
                         }
                     }
                     else if (element.CompareTo(current.Value) == 0)

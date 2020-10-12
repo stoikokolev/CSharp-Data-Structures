@@ -126,7 +126,6 @@
 
                 toReturn = previous.Value;
                 previous.Next = null;
-                currnet = null;
             }
 
             this.Count--;

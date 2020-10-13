@@ -129,7 +129,7 @@
         IEnumerator IEnumerable.GetEnumerator()
             => this.GetEnumerator();
 
-        public void ValidateIndex(int index)
+        private void ValidateIndex(int index)
         {
             if (index < 0 || index >= this.Count)
             {

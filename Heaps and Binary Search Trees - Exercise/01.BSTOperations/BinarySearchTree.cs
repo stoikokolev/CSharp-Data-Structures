@@ -233,7 +233,6 @@
             if (current.RightChild == null && current.LeftChild != null)
             {
                 this.Root = current.LeftChild;
-                current = null;
                 return;
             }
 
@@ -247,14 +246,12 @@
             if (current.LeftChild != null)
             {
                 var toInsert = current.LeftChild;
-                previous.RightChild = null;
-                current = null;
+                if (previous != null) previous.RightChild = null;
                 this.Insert(toInsert.Value);
             }
             else
             {
-                previous.RightChild = null;
-                current = null;
+                if (previous != null) previous.RightChild = null;
             }
         }
 
@@ -284,7 +281,7 @@
 
         private int GetNodeCount(Node<T> curent)
         {
-            return curent == null ? 0 : curent.Count;
+            return curent?.Count ?? 0;
         }
 
         private void CheckIfEmpty()

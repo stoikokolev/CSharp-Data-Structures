@@ -201,7 +201,6 @@
             if (current.LeftChild == null && current.RightChild != null)
             {
                 this.Root = current.RightChild;
-                current = null;
                 return;
             }
 
@@ -215,14 +214,12 @@
             if (current.RightChild != null)
             {
                 var toInsert = current.RightChild;
-                previous.LeftChild = null;
-                current = null;
+                if (previous != null) previous.LeftChild = null;
                 this.Insert(toInsert.Value);
             }
             else
             {
-                previous.LeftChild = null;
-                current = null;
+                if (previous != null) previous.LeftChild = null;
             }
 
 

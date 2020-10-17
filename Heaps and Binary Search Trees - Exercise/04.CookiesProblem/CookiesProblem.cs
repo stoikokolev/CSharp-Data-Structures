@@ -1,5 +1,4 @@
-﻿using System;
-using Wintellect.PowerCollections;
+﻿using Wintellect.PowerCollections;
 
 namespace _04.CookiesProblem
 {
@@ -7,9 +6,9 @@ namespace _04.CookiesProblem
     {
         public int Solve(int k, int[] cookies)
         {
-            int count = 0;
+            var count = 0;
             var bagOfCookies = new OrderedBag<int>(cookies);
-            for (int i = 0; bagOfCookies.Count>1; i++)
+            while (bagOfCookies.Count > 1)
             {
                 if (bagOfCookies.GetFirst() > k)
                 {
@@ -18,18 +17,16 @@ namespace _04.CookiesProblem
                 count++;
                 var first = bagOfCookies.RemoveFirst();
                 var second = bagOfCookies.RemoveFirst();
-                bagOfCookies.Add(first+2*second);
-                
+                bagOfCookies.Add(first + 2 * second);
+
             }
 
             if (bagOfCookies.GetFirst() > k)
             {
                 return count;
             }
-            else
-            {
-                return -1;
-            }
+
+            return -1;
         }
     }
 }

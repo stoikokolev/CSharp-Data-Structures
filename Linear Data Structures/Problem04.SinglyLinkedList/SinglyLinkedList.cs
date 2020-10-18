@@ -124,8 +124,11 @@
                     currnet = currnet.Next;
                 }
 
-                toReturn = previous.Value;
-                previous.Next = null;
+                if (previous != null)
+                {
+                    toReturn = previous.Value;
+                    previous.Next = null;
+                }
             }
 
             this.Count--;

@@ -46,16 +46,16 @@ namespace Tree
             int indent = 0;
             var root = this;
 
-            this.DFStoString(root,sb,indent);
+            this.DfStoString(root,sb,indent);
 
             return sb.ToString().Trim();
         }
 
        
 
-        public Tree<T> GetDeepestLeftomostNode()
+        public Tree<T> GetDeepestLeftmostNode()
         {
-            var leafs = this.OrderBFS(this).Where(x => this.IsLeaf(x)).ToList();
+            var leafs = this.OrderBFS(this).Where(this.IsLeaf).ToList();
 
             int maxDepth = int.MinValue;
             Tree<T> deepestNode = null;
@@ -152,7 +152,7 @@ namespace Tree
         public List<T> GetLongestPath()
         {
             var stack = new Stack<T>();
-            var current = this.GetDeepestLeftomostNode();
+            var current = this.GetDeepestLeftmostNode();
             while (current != null)
             {
                 stack.Push(current.Key);
@@ -214,12 +214,12 @@ namespace Tree
 
         }
 
-        private void DFStoString(Tree<T> current, StringBuilder sb, int indent)
+        private void DfStoString(Tree<T> current, StringBuilder sb, int indent)
         {
             sb.AppendLine($"{new string(' ', indent)}{current.Key}");
             foreach (var child in current._children)
             {
-                this.DFStoString(child, sb, indent + 2);
+                this.DfStoString(child, sb, indent + 2);
             }
         }
 

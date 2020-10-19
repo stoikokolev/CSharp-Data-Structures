@@ -20,7 +20,7 @@
 
         List<T> GetMiddleKeys();
 
-        Tree<T> GetDeepestLeftomostNode();
+        Tree<T> GetDeepestLeftmostNode();
 
         List<T> GetLongestPath();
 

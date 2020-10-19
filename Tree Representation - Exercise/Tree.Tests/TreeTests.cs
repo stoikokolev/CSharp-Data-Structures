@@ -87,7 +87,7 @@ namespace Tree.Tests
         [Test]
         public void TreeDeepestLeftmostNodeShouldWorkCorrectly()
         {
-            Tree<int> deepestNode = this._tree.GetDeepestLeftomostNode();
+            Tree<int> deepestNode = this._tree.GetDeepestLeftmostNode();
 
             Assert.AreEqual(1, deepestNode.Key);
         }
